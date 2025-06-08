@@ -7,22 +7,30 @@ contract mintableERC20 is ERC20 {
     mapping(address => uint) public lastMintTime;
     uint private interval;
     address public owner;
-    
-    
-    constructor(string memory _name, string memory _symbol) ERC20(_name,_symbol) {
+
+    constructor(
+        string memory _name,
+        string memory _symbol
+    ) ERC20(_name, _symbol) {
         _mint(msg.sender, 10000000000000000000000);
         owner = msg.sender;
         interval = 3600;
     }
-    
+
     function mintToken() public {
-        require(lastMintTime[msg.sender] == 0 || block.timestamp > lastMintTime[msg.sender] + interval, 'You need to wait an hour between mints');
+        require(
+            lastMintTime[msg.sender] == 0 ||
+                block.timestamp > lastMintTime[msg.sender] + interval,
+            "You need to wait an hour between mints"
+        );
         _mint(msg.sender, 100000000000000000000);
         lastMintTime[msg.sender] = block.timestamp;
     }
-    
+
     function canMint() public view returns (bool) {
-        return lastMintTime[msg.sender] == 0 || block.timestamp > lastMintTime[msg.sender] + interval;
+        return
+            lastMintTime[msg.sender] == 0 ||
+            block.timestamp > lastMintTime[msg.sender] + interval;
     }
 
     function setInterval(uint _newInterval) public onlyOwner {
@@ -30,7 +38,7 @@ contract mintableERC20 is ERC20 {
     }
 
     modifier onlyOwner() {
-        require(msg.sender == owner, 'Not owner');
+        require(msg.sender == owner, "Not owner");
         _;
     }
 }

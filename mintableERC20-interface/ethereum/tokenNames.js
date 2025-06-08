@@ -1,38 +1,42 @@
 export const tokenNames = [
   {
-    name: 'Mercury',
-    symbol: 'MERC',
+    name: "One",
+    symbol: "ONE",
   },
   {
-    name: 'Venus',
-    symbol: 'VEN',
+    name: "Two",
+    symbol: "TWO",
   },
   {
-    name: 'Earth',
-    symbol: 'ERTH',
+    name: "Three",
+    symbol: "THREE",
   },
   {
-    name: 'Mars',
-    symbol: 'MARS',
+    name: "Four",
+    symbol: "FOUR",
   },
   {
-    name: 'Jupiter',
-    symbol: 'JUP',
+    name: "Five",
+    symbol: "FIVE",
   },
   {
-    name: 'Saturn',
-    symbol: 'SAT',
+    name: "Six",
+    symbol: "SIX",
   },
   {
-    name: 'Uranus',
-    symbol: 'UNS',
+    name: "Seven",
+    symbol: "SEVEN",
   },
   {
-    name: 'Neptune',
-    symbol: 'NEPT',
+    name: "Eight",
+    symbol: "EIGHT",
   },
   {
-    name: 'Pluto',
-    symbol: 'PLUT',
+    name: "Nine",
+    symbol: "NINE",
+  },
+  {
+    name: "Ten",
+    symbol: "TEN",
   },
 ];

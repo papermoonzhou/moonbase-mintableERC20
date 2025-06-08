@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
-import { Button, Form, Table, Container } from 'semantic-ui-react';
-import { tokenNames } from '../ethereum/tokenNames';
-import tokenInstance from '../ethereum/feed';
+import React, { useState, useEffect } from "react";
+import { Button, Form, Table, Container } from "semantic-ui-react";
+import { tokenNames } from "../ethereum/tokenNames";
+import tokenInstance from "../ethereum/feed";
 
-const addresses = require('../ethereum/addresses');
+const addresses = require("../ethereum/addresses");
 
 const dataFeed = ({ account }) => {
   const [tokBalState, setTokBalState] = useState(Array());
@@ -13,7 +13,9 @@ const dataFeed = ({ account }) => {
     const onUpdate = async () => {
       let balances = Array();
       for (let token of tokenNames) {
-        balances[token['name'].toLowerCase()] = await getBalance(addresses[token['name'].toLowerCase()]);
+        balances[token["name"].toLowerCase()] = await getBalance(
+          addresses[token["name"].toLowerCase()]
+        );
       }
 
       setTokBalState(balances);
@@ -22,14 +24,18 @@ const dataFeed = ({ account }) => {
     const getBalance = async (address) => {
       // Get token balance and mint state
       try {
-        if (account.slice(0, 2) == '0x') {
+        if (account.slice(0, 2) == "0x") {
           const contractInstance = tokenInstance(address);
           const dec = await contractInstance.decimals();
-          const mint = await contractInstance.canMint(account);
+          // const mint = await contractInstance.canMint(account);
+          const mint = true;
           const balance = await contractInstance.balanceOf(account);
-          return { balance: (balance.toString() / Math.pow(10, dec)).toFixed(2), mint: mint };
+          return {
+            balance: (balance.toString() / Math.pow(10, dec)).toFixed(2),
+            mint: mint,
+          };
         } else {
-          return { balance: 0, mint: false };
+          return { balance: 0, mint: true };
         }
       } catch (error) {
         // Could not fetch price return error
@@ -74,9 +80,9 @@ const dataFeed = ({ account }) => {
       const symbol = await contractInstance.symbol();
 
       await ethereum.request({
-        method: 'wallet_watchAsset',
+        method: "wallet_watchAsset",
         params: {
-          type: 'ERC20', // Initially only supports ERC20, but eventually more!
+          type: "ERC20", // Initially only supports ERC20, but eventually more!
           options: {
             address: address, // The address that the token is at.
             symbol: symbol, // A ticker symbol or shorthand, up to 5 chars.
@@ -95,12 +101,12 @@ const dataFeed = ({ account }) => {
     const { Row, Cell } = Table;
 
     return tokenNames.map((token, index) => {
-      let imgName = `/logos/${token['name'].toLowerCase()}.svg`;
+      let imgName = `/logos/${token["name"].toLowerCase()}.svg`;
       let imgURL = `https://raw.githubusercontent.com/albertov19/moonbase-mintableERC20/main/mintableERC20-interface/public${imgName}`;
 
-      let tokenAddress = addresses[token['name'].toLowerCase()];
-      let balance = tokBalState[token['name'].toLowerCase()]?.balance || 'N/A';
-      let mintEnabled = tokBalState[token['name'].toLowerCase()]?.mint || false;
+      let tokenAddress = addresses[token["name"].toLowerCase()];
+      let balance = tokBalState[token["name"].toLowerCase()]?.balance || "N/A";
+      let mintEnabled = tokBalState[token["name"].toLowerCase()]?.mint || false;
       let expURL = `https://moonbase.moonscan.io/token/${tokenAddress}`;
       return (
         <Row key={index}>
@@ -112,7 +118,12 @@ const dataFeed = ({ account }) => {
           <Cell>
             {
               <Form onSubmit={() => onMint(token.name, tokenAddress)}>
-                <Button type='submit' loading={loading} disabled={loading || !mintEnabled} color='orange'>
+                <Button
+                  type="submit"
+                  loading={loading}
+                  disabled={loading || !mintEnabled}
+                  color="orange"
+                >
                   Mint
                 </Button>
               </Form>
@@ -121,7 +132,12 @@ const dataFeed = ({ account }) => {
           <Cell>
             {
               <Form onSubmit={() => addToMetamask(tokenAddress, imgURL)}>
-                <Button type='submit' loading={loading} disabled={loading} color='orange'>
+                <Button
+                  type="submit"
+                  loading={loading}
+                  disabled={loading}
+                  color="orange"
+                >
                   Add
                 </Button>
               </Form>
@@ -138,16 +154,19 @@ const dataFeed = ({ account }) => {
     <div>
       <h3>Token Balance Information</h3>
       <p>
-        Information displayed in the following table corresponds to your on-chain balance of each of the following ERC20
-        tokens on the Moonbase Alpha TestNet! <br />
-        Users can mint 100 tokens every hour in each ERC20 token contract. <br />
-        There are 8 tokens that represent each planet of the solar system. The 9th token is for Pluto, which is not{' '}
-        <a href='https://www.loc.gov/everyday-mysteries/astronomy/item/why-is-pluto-no-longer-a-planet/'>
+        Information displayed in the following table corresponds to your
+        on-chain balance of each of the following ERC20 tokens on the Moonbase
+        Alpha TestNet! <br />
+        Users can mint 100 tokens every hour in each ERC20 token contract.{" "}
+        <br />
+        There are 8 tokens that represent each planet of the solar system. The
+        9th token is for Pluto, which is not{" "}
+        <a href="https://www.loc.gov/everyday-mysteries/astronomy/item/why-is-pluto-no-longer-a-planet/">
           considered a planet anymore.
         </a>
       </p>
       <Container>
-        <Table textAlign='center'>
+        <Table textAlign="center">
           <Header>
             <Row>
               <HeaderCell>Logo</HeaderCell>
