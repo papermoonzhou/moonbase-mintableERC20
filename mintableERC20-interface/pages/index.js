@@ -26,7 +26,6 @@ const App = () => {
 
   const checkMetamask = async () => {
     const provider = await detectEthereumProvider({ mustBeMetaMask: true });
-    console.log("========= checkMetamask");
     let accounts;
 
     if (provider) {
@@ -38,16 +37,14 @@ const App = () => {
         method: "eth_chainId",
       });
 
-      console.log("========= chainId:", chainId);
-
       let networkName;
       switch (chainId) {
         case "0x190f1b45":
-          networkName = "Moonbase Alpha";
+          networkName = "Passet Hub";
           break;
         default:
           networkName = "Not Connected";
-          setAccount("Only Moonbase Alpha Supported");
+          setAccount("Only Passet Hub Supported");
           break;
       }
 
@@ -67,14 +64,13 @@ const App = () => {
   };
 
   const onConnect = async () => {
-    console.log("========= onConnect");
     await checkMetamask();
   };
 
   return (
     <Container>
       <Head>
-        <title>Moonbase ERC20Mint</title>
+        <title>Passet Hub ERC20Mint</title>
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png" />
         <link
           rel="stylesheet"
@@ -83,7 +79,7 @@ const App = () => {
       </Head>
       <Menu style={{ marginTop: "10px" }}>
         <Link route="/">
-          <a className="item">Moonbase Alpha ERC20 Faucet</a>
+          <a className="item">Passet Hub ERC20 Faucet</a>
         </Link>
         <Menu.Menu position="right">
           <a className="item"> {account} </a>
