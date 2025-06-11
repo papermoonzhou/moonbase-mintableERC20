@@ -5,7 +5,6 @@ import { buildModule } from "@nomicfoundation/hardhat-ignition/modules"
 
 const MyTokenModule = buildModule("MyTokenModule", (m) => {
     const params = m.getParameter("parameters");
-    console.log("=========", m)
     const initialSupply = m.getParameter("parameters", 1_000_000n * 10n ** 18n)
 
     const token = m.contract("MyToken", [initialSupply])
