@@ -25,21 +25,26 @@ const dataFeed = ({ account }) => {
       // Get token balance and mint state
       try {
         if (account.slice(0, 2) == "0x") {
+          console.log("========");
           const contractInstance = tokenInstance(address);
+          console.log("======== 1 ", contractInstance.address);
           const dec = await contractInstance.decimals();
-          // const mint = await contractInstance.canMint(account);
-          const mint = true;
+          console.log("======== 2 ", dec);
+          const mint = await contractInstance.canMint(account);
+          console.log("======== 3 ", mint);
           const balance = await contractInstance.balanceOf(account);
+          console.log("======== 4 ", balance);
           return {
             balance: (balance.toString() / Math.pow(10, dec)).toFixed(2),
             mint: mint,
           };
         } else {
-          return { balance: 0, mint: true };
+          return { balance: 0, mint: false };
         }
       } catch (error) {
         // Could not fetch price return error
-        console.log(error);
+        return { balance: 0, mint: false };
+        // console.log(error);
       }
     };
 
@@ -155,8 +160,8 @@ const dataFeed = ({ account }) => {
       <h3>Token Balance Information</h3>
       <p>
         Information displayed in the following table corresponds to your
-        on-chain balance of each of the following ERC20 tokens on the Moonbase
-        Alpha TestNet! <br />
+        on-chain balance of each of the following ERC20 tokens on the Paset Hub
+        TestNet! <br />
         Users can mint 100 tokens every hour in each ERC20 token contract.{" "}
         <br />
         There are 8 tokens that represent each planet of the solar system. The

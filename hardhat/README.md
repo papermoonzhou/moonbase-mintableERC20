@@ -9,14 +9,11 @@ This project demonstrates how to use Hardhat with Polkadot. It comes with a samp
 ```shell
 npx hardhat test
 npx hardhat node
-npx hardhat node &&
-
-echo y | npx hardhat ignition deploy ./ignition/modules/MintableERC20.ts --network passetHub --parameters ./parameters.json
-
-echo y | npx hardhat ignition deploy ./ignition/modules/MintableERC20.ts --network passetHub --parameters ./parameters.json
-
 ```
 
-```bash
-npx hardhat ignition deploy ./ignition/modules/Lock.ts --network hardhat --parameters '{"unlockTime":1893456000,"lockedAmount":1000000}'
+3. deploy contract to passet hub
+
+```shell
+echo y | npx hardhat ignition deploy ./ignition/modules/MintableERC20.ts --network passetHub --parameters ./parameters.json
+
 ```
