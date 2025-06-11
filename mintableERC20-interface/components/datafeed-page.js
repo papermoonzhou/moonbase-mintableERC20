@@ -25,15 +25,10 @@ const dataFeed = ({ account }) => {
       // Get token balance and mint state
       try {
         if (account.slice(0, 2) == "0x") {
-          console.log("========");
           const contractInstance = tokenInstance(address);
-          console.log("======== 1 ", contractInstance.address);
           const dec = await contractInstance.decimals();
-          console.log("======== 2 ", dec);
           const mint = await contractInstance.canMint(account);
-          console.log("======== 3 ", mint);
           const balance = await contractInstance.balanceOf(account);
-          console.log("======== 4 ", balance);
           return {
             balance: (balance.toString() / Math.pow(10, dec)).toFixed(2),
             mint: mint,
@@ -43,8 +38,7 @@ const dataFeed = ({ account }) => {
         }
       } catch (error) {
         // Could not fetch price return error
-        return { balance: 0, mint: false };
-        // console.log(error);
+        console.log(error);
       }
     };
 
